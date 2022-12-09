@@ -6,6 +6,7 @@ import {
 import Todos from './pages/Todos';
 import Hero from './components/Hero';
 
+
 function App() {
   return (
     <Box textAlign="center" fontSize="lg">

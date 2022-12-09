@@ -52,6 +52,7 @@ const Todos = () => {
     newTasks.splice(index, 1);
     setTasks(newTasks);
   };
+
   return (
     <Flex p={3} display="flex" flexDirection="column">
       <Flex w="325px" alignSelf="center">
@@ -79,9 +80,6 @@ const Todos = () => {
               </Tab>
               <Tab fontWeight="bold" fontSize={12}>
                 Completed Tasks
-              </Tab>
-              <Tab fontWeight="bold" fontSize={12} isDisabled>
-                {tasks.length} items left
               </Tab>
             </TabList>
             <TabPanels>
