@@ -2,8 +2,6 @@ import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import * as serviceWorker from './serviceWorker';
 import '@fontsource/montserrat';
 import theme from './theme';
 
@@ -19,5 +17,3 @@ root.render(
   </>
 );
 
-serviceWorker.unregister();
-reportWebVitals();
