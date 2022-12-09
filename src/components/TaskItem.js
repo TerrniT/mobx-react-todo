@@ -1,35 +1,41 @@
-import { Text, Checkbox, HStack, Container, Badge, Box, Flex, VStack } from '@chakra-ui/react';
+import {
+  Text,
+  Checkbox,
+  HStack,
+  Container,
+  Badge,
+  VStack,
+} from '@chakra-ui/react';
 import TodoSettings from '../atoms/TodoSettings';
 
-
-
-const TaskItem = ({ task, color }) => {
+const TaskItem = ({ title, description, status, color }) => {
   return (
-    <Container
-      maxW="310px"
-      my={3}
-      h={100}
-    >
+    <Container maxW="310px" my={3} h={100}>
       <HStack justifyContent="space-between">
-        <Checkbox
-          colorScheme="green"
-        >
-        </Checkbox>
-
-        <VStack w="100%">
-          <Text color={color} w="80%" noOfLines="1" textAlign="flex-start">
-            {task.text}
+        <Checkbox colorScheme="green"></Checkbox>
+        <HStack w="100%">
+          <Text
+            fontSize="15"
+            color={color}
+            noOfLines="1"
+            textAlign="flex-start"
+          >
+            {description}
           </Text>
-          <Badge fontSize="0.5em" colorScheme="green">complete</Badge>
-        </VStack>
+          {status ? (
+            <Badge fontSize="0.5em" colorScheme="green">
+              Done
+            </Badge>
+          ) : (
+            <Badge fontSize="0.5em" colorScheme="red">
+              Undone
+            </Badge>
+          )}
+        </HStack>
         <TodoSettings />
       </HStack>
-
     </Container>
-
   );
 };
 
-
 export default TaskItem;
-

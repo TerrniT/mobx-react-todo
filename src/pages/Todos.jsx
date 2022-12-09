@@ -14,58 +14,47 @@ import {
 
 import TaskItem from '../components/TaskItem';
 
-const Todos = () => {
+const { REACT_APP_FAKE_SERVER } = process.env;
 
+const Todos = () => {
   const modes = useColorModeValue('purple.400', 'orange.300');
   const scheme = useColorModeValue('purple', 'orange');
   const color = useColorModeValue('gray.800', 'white');
 
-  const [newTask, setNewTask] = useState('');
-  const [tasks, setTasks] = useState(
-    () => JSON.parse(localStorage.getItem('tasks')) || []
-  );
+  const [todos, setTodos] = useState([]);
+
+  const getTodos = () => {
+    fetch(`${REACT_APP_FAKE_SERVER}/todos`)
+      .then(res => res.json())
+      .then(res => setTodos(res));
+  };
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
-
-  const addTask = e => {
-    e.preventDefault();
-
-    if (newTask.length > 0) {
-      setTasks(prevState => [
-        ...prevState,
-        { text: newTask, newTask, isChecked: false },
-      ]);
-      setNewTask('');
-    }
-  };
-
-  const updateTask = (index, checked) => {
-    let newTasks = [...tasks];
-    newTasks[index].isChecked = checked;
-    setTasks(newTasks);
-  };
-
-  const removeTask = index => {
-    const newTasks = [...tasks];
-    newTasks.splice(index, 1);
-    setTasks(newTasks);
-  };
+    getTodos();
+  }, []);
 
   return (
     <Flex p={3} display="flex" flexDirection="column">
       <Flex w="325px" alignSelf="center">
         <Flex w="325px" flexDir="column">
-          <form onSubmit={addTask}>
+          <form
+          //onSubmit={()}
+          >
             <Flex mt="10%">
               <Input
                 focusBorderColor={modes}
-                value={newTask}
-                onChange={e => setNewTask(e.target.value)}
+                // value={newTask}
+                // onChange={e => setNewTask(e.target.value)}
                 placeholder="Add task"
               />
-              <Button color={color} onClick={addTask} ml={5} bg={modes}>
+              <Button
+                color={color}
+                //onClick={addTask}
+                ml={5}
+                p={4}
+                size="xs"
+                bg={modes}
+              >
                 Add Task
               </Button>
             </Flex>
@@ -84,48 +73,23 @@ const Todos = () => {
             </TabList>
             <TabPanels>
               <TabPanel>
-                {tasks.map((task, index) => (
+                {todos.map(todo => (
                   <TaskItem
-                    removeTask={removeTask}
-                    updateTask={updateTask}
-                    key={index}
-                    task={task}
-                    index={index}
+                    key={todo.id}
+                    description={todo.body}
+                    status={todo.completed}
+                    color={color}
                   />
                 ))}
               </TabPanel>
-              <TabPanel>
-                {tasks.map((task, index) =>
-                  !task.isChecked ? (
-                    <TaskItem
-                      removeTask={removeTask}
-                      updateTask={updateTask}
-                      key={index}
-                      task={task}
-                      index={index}
-                    />
-                  ) : null
-                )}
-              </TabPanel>
-              <TabPanel>
-                {tasks.map((task, index) =>
-                  task.isChecked ? (
-                    <TaskItem
-                      removeTask={removeTask}
-                      updateTask={updateTask}
-                      key={index}
-                      task={task}
-                      index={index}
-                    />
-                  ) : null
-                )}
-              </TabPanel>
+              <TabPanel>InComplete Todos</TabPanel>
+              <TabPanel>Complete Todos</TabPanel>
             </TabPanels>
           </Tabs>
         </Flex>
       </Flex>
     </Flex>
-  )
-}
+  );
+};
 
-export default Todos
+export default Todos;

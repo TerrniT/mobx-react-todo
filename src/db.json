@@ -2,9 +2,13 @@
   "todos": [
     {
       "id": 1,
-      "title": "First REST Todo",
       "body": "Do test work",
       "completed": false
+    },
+    {
+      "id": 2,
+      "body": "Go to sleep",
+      "completed": true
     }
   ]
 }
