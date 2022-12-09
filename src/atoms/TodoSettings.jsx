@@ -3,7 +3,7 @@ import React from 'react'
 import { Menu, MenuButton, MenuList, MenuItem, Flex, Button } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon, SettingsIcon } from '@chakra-ui/icons';
 
-const TodoSettings = () => {
+const TodoSettings = ({ remote }) => {
   return (
     <Menu
     >
