@@ -10,9 +10,13 @@ import {
   TabPanels,
   TabPanel,
   useColorModeValue,
+  Select,
 } from '@chakra-ui/react';
 
+import axios from 'axios';
+
 import TaskItem from '../components/TaskItem';
+import useUniqueId from '../hooks/useUniqueId';
 
 const { REACT_APP_FAKE_SERVER } = process.env;
 
@@ -22,11 +26,28 @@ const Todos = () => {
   const color = useColorModeValue('gray.800', 'white');
 
   const [todos, setTodos] = useState([]);
+  const [newTodo, setNewTodo] = useState('');
+  const [todoDone, setTodoDone] = useState(true);
 
   const getTodos = () => {
-    fetch(`${REACT_APP_FAKE_SERVER}/todos`)
-      .then(res => res.json())
-      .then(res => setTodos(res));
+    axios.get(`${REACT_APP_FAKE_SERVER}/todos`).then(res => setTodos(res.data));
+  };
+
+  const handleNewTodo = event => {
+    event.preventDefault();
+    if (!newTodo) return;
+
+    const data = {
+      id: useUniqueId,
+      body: newTodo,
+      completed: todoDone,
+    };
+
+    axios
+      .post(`${REACT_APP_FAKE_SERVER}/todos`, data)
+      .then(res => setTodos([...todos, res.data]));
+
+    setNewTodo('');
   };
 
   useEffect(() => {
@@ -37,19 +58,17 @@ const Todos = () => {
     <Flex p={3} display="flex" flexDirection="column">
       <Flex w="325px" alignSelf="center">
         <Flex w="325px" flexDir="column">
-          <form
-          //onSubmit={()}
-          >
+          <form onSubmit={handleNewTodo}>
             <Flex mt="10%">
               <Input
                 focusBorderColor={modes}
-                // value={newTask}
-                // onChange={e => setNewTask(e.target.value)}
-                placeholder="Add task"
+                value={newTodo}
+                onChange={event => setNewTodo(event.target.value)}
+                placeholder="Add Todo"
               />
               <Button
                 color={color}
-                //onClick={addTask}
+                onClick={handleNewTodo}
                 ml={5}
                 p={4}
                 size="xs"
@@ -76,6 +95,7 @@ const Todos = () => {
                 {todos.map(todo => (
                   <TaskItem
                     key={todo.id}
+                    todoId={todo.id}
                     description={todo.body}
                     status={todo.completed}
                     color={color}

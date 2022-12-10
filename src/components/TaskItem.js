@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import TodoSettings from '../atoms/TodoSettings';
 
-const TaskItem = ({ title, description, status, color }) => {
+const TaskItem = ({ title, description, status, todoId, color }) => {
   return (
     <Container maxW="310px" my={3} h={100}>
       <HStack justifyContent="space-between">
@@ -32,7 +32,7 @@ const TaskItem = ({ title, description, status, color }) => {
             </Badge>
           )}
         </HStack>
-        <TodoSettings />
+        <TodoSettings todoId={todoId} />
       </HStack>
     </Container>
   );

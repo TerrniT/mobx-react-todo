@@ -1,14 +1,3 @@
 {
-  "todos": [
-    {
-      "id": 1,
-      "body": "Do test work",
-      "completed": false
-    },
-    {
-      "id": 2,
-      "body": "Go to sleep",
-      "completed": true
-    }
-  ]
+  "todos": []
 }

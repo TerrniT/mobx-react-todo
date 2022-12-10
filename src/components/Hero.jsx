@@ -1,19 +1,13 @@
 import React from 'react';
-import {
-  Flex,
-  Heading,
-  Text,
-  Link,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Flex, Heading, Text, Link, useColorModeValue } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 
 import Scene from './model/Scene';
 import ColorModeSwitcher from './../atoms/ColorModeSwitcher';
 
 const Hero = () => {
-
   const color = useColorModeValue('gray.800', 'white');
+
   return (
     <div>
       <ColorModeSwitcher mt="5" />
@@ -33,7 +27,7 @@ const Hero = () => {
         </Text>
       </Flex>
     </div>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;
