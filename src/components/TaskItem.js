@@ -4,16 +4,17 @@ import {
   HStack,
   Container,
   Badge,
-  VStack,
+  Box,
 } from '@chakra-ui/react';
 import TodoSettings from '../atoms/TodoSettings';
 
 const TaskItem = ({ title, description, status, todoId, color }) => {
   return (
-    <Container maxW="310px" my={3} h={100}>
-      <HStack justifyContent="space-between">
+    <Box maxW="280px" px={2} my={3} h={10}>
+      <HStack>
         <Checkbox colorScheme="green"></Checkbox>
-        <HStack w="100%">
+
+        <HStack justifyContent="space-between" minW="80%">
           <Text
             fontSize="15"
             color={color}
@@ -32,9 +33,10 @@ const TaskItem = ({ title, description, status, todoId, color }) => {
             </Badge>
           )}
         </HStack>
+
         <TodoSettings todoId={todoId} />
       </HStack>
-    </Container>
+    </Box>
   );
 };
 

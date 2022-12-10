@@ -1,18 +1,16 @@
 import React from 'react';
-import {
-  Box,
-} from '@chakra-ui/react';
+import { Center, Flex } from '@chakra-ui/react';
 
 import Todos from './pages/Todos';
 import Hero from './components/Hero';
-
+import Layout from './components/Layout';
 
 function App() {
   return (
-    <Box textAlign="center" fontSize="lg">
+    <Layout>
       <Hero />
       <Todos />
-    </Box>
+    </Layout>
   );
 }
 

@@ -59,8 +59,8 @@ const Todos = () => {
 
   return (
     <Flex p={3} display="flex" flexDirection="column">
-      <Flex w="325px" alignSelf="center">
-        <Flex w="325px" flexDir="column">
+      <Flex w="310px" alignSelf="center">
+        <Flex w="310px" flexDir="column">
           <form onSubmit={handleNewTodo}>
             <Flex mt="10%">
               <Input
@@ -83,14 +83,14 @@ const Todos = () => {
           </form>
           <Tabs mt="2%" colorScheme={scheme}>
             <TabList>
-              <Tab fontWeight="bold" fontSize={12}>
+              <Tab fontWeight="bold" fontSize={12} w="100%">
                 All
               </Tab>
               <Tab fontWeight="bold" fontSize={12}>
-                Incomplete Tasks
+                Done
               </Tab>
               <Tab fontWeight="bold" fontSize={12}>
-                Completed Tasks
+                Undone
               </Tab>
             </TabList>
             <TabPanels>
