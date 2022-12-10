@@ -29,6 +29,9 @@ const Todos = () => {
   const [newTodo, setNewTodo] = useState('');
   const [todoDone, setTodoDone] = useState(true);
 
+  // TODO: add mobx store and move all api func to api itself
+  // TODO: move project to typescript + mobx
+
   const getTodos = () => {
     axios.get(`${REACT_APP_FAKE_SERVER}/todos`).then(res => setTodos(res.data));
   };
