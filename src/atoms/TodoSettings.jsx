@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
   Menu,
@@ -7,17 +7,20 @@ import {
   MenuItem,
   Flex,
   Button,
+  Box,
 } from '@chakra-ui/react';
-import { DeleteIcon, EditIcon, SettingsIcon } from '@chakra-ui/icons';
+import { DeleteIcon, SettingsIcon } from '@chakra-ui/icons';
 import axios from 'axios';
+import UpdateTodo from '../components/UpdateTodo';
 
 const { REACT_APP_FAKE_SERVER } = process.env;
 
 const TodoSettings = ({ todoId }) => {
+  const [loading, setLoading] = useState(true);
   const handleDelete = todoId => {
     axios
       .delete(`${REACT_APP_FAKE_SERVER}/todos/${todoId}`)
-      .then(res => console.log(res));
+      .then(setLoading(prev => !prev));
   };
 
   return (
@@ -42,21 +45,17 @@ const TodoSettings = ({ todoId }) => {
         alignItems="center"
       >
         <Flex flexDir="column" px="1" gap="2">
-          <MenuItem
-            as={Button}
-            size="sm"
-            onClick={() => console.log('this works')}
-            icon={<EditIcon />}
-          >
-            Edit
+          <MenuItem as={Box}>
+            <UpdateTodo />
           </MenuItem>
 
           <MenuItem
-            as={Button}
+            as={Box}
+            w="100%"
             size="sm"
             onClick={() => handleDelete(todoId)}
-            icon={<DeleteIcon />}
           >
+            <DeleteIcon />
             Delete
           </MenuItem>
         </Flex>

@@ -11,12 +11,15 @@ import {
   TabPanel,
   useColorModeValue,
   Select,
+  Checkbox,
 } from '@chakra-ui/react';
 
 import axios from 'axios';
 
 import TaskItem from '../components/TaskItem';
 import useUniqueId from '../hooks/useUniqueId';
+import AddTodo from '../components/AddTodo';
+import { getTodos } from '../api/api';
 
 const { REACT_APP_FAKE_SERVER } = process.env;
 
@@ -27,14 +30,10 @@ const Todos = () => {
 
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
-  const [todoDone, setTodoDone] = useState(true);
+  const [todoDone, setTodoDone] = useState(false);
 
   // TODO: add mobx store and move all api func to api itself
   // TODO: move project to typescript + mobx
-
-  const getTodos = () => {
-    axios.get(`${REACT_APP_FAKE_SERVER}/todos`).then(res => setTodos(res.data));
-  };
 
   const handleNewTodo = event => {
     event.preventDefault();
@@ -53,8 +52,24 @@ const Todos = () => {
     setNewTodo('');
   };
 
+  const toggleComplete = async todo => {
+    await axios
+      .put(`${REACT_APP_FAKE_SERVER}/todos/${todo.id}`, {
+        ...todo,
+        completed: !todo.completed,
+      })
+      .then(res => {
+        const updatedTodo = todos.map(item => {
+          if (item.id !== todo.id) return item;
+          return res.data;
+        });
+
+        setTodos(updatedTodo);
+      });
+  };
+
   useEffect(() => {
-    getTodos();
+    getTodos().then(res => setTodos(res.data));
   }, []);
 
   return (
@@ -69,17 +84,9 @@ const Todos = () => {
                 onChange={event => setNewTodo(event.target.value)}
                 placeholder="Add Todo"
               />
-              <Button
-                color={color}
-                onClick={handleNewTodo}
-                ml={5}
-                p={4}
-                size="xs"
-                bg={modes}
-              >
-                Add Task
-              </Button>
             </Flex>
+
+            {/* <AddTodo /> */}
           </form>
           <Tabs mt="2%" colorScheme={scheme}>
             <TabList>
@@ -102,7 +109,12 @@ const Todos = () => {
                     description={todo.body}
                     status={todo.completed}
                     color={color}
-                  />
+                  >
+                    <Checkbox
+                      colorScheme="green"
+                      onChange={() => toggleComplete(todo)}
+                    ></Checkbox>
+                  </TaskItem>
                 ))}
               </TabPanel>
               <TabPanel>InComplete Todos</TabPanel>

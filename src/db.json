@@ -1,3 +1,15 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "body": "dasd",
+      "completed": false,
+      "id": 1
+    },
+    {
+      "body": "asd",
+      "completed": false,
+      "id": 2
+    }
+  ],
+  "auth": []
 }
