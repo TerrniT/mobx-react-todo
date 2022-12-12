@@ -1,29 +1,32 @@
 
-## Что Получилось
-![image](https://user-images.githubusercontent.com/79077994/199134822-0ca2ce0e-1d5d-4b35-8623-27801ca46de2.png)
-
-
 
 ## Что использовал
 - [ReactJS + ChakraUI] - Bootstrapped starter project (react, react-icons, chakra, etc)
 - [React Three Fiber] - React-three-fiber is a React renderer for three.js
 - [React Drei] - Drei is a growing collection of useful helpers and abstractions for react-three-fiber
+- Fake Server - Json Server
 
 
 ## Установка
-
 
 
 ```sh
 git clone https://github.com/TerrniT/react-chakra-todo.git
 cd react-chakra-todo
 npm install && yarn install
+
 ```
 
-### Запуск
+### Запуск (Client)
 
 ```sh
-yarn start
+npm run start 
+```
+
+### Запуск (Server)
+
+```sh
+npm run fake-server
 ```
 
 
