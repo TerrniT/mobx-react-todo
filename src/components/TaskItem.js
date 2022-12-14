@@ -1,16 +1,12 @@
 import {
   Text,
-  Checkbox,
   HStack,
-  Container,
   Badge,
   Box,
   Fade,
 } from '@chakra-ui/react';
-import axios from 'axios';
 import TodoSettings from '../atoms/TodoSettings';
 
-const { REACT_APP_FAKE_SERVER } = process.env;
 
 const TaskItem = ({
   title,

@@ -17,9 +17,9 @@ const Hero = () => {
 
   return (
     <div>
-      <Flex p={3} display="flex" flexDirection="column">
+      <Flex p={3} mt={6} display="flex" flexDirection="column">
         <Scene />
-        <Heading justifySelf="flex-start" color={color} fontWeight="500">
+        <Heading justifySelf="flex-start" my={4} color={color} fontWeight="500">
           Todo
         </Heading>
         <HStack justifyContent="space-between">

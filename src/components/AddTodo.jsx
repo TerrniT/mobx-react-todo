@@ -19,6 +19,7 @@ import {
 import axios from 'axios';
 import React, { useState } from 'react';
 import useUniqueId from '../hooks/useUniqueId';
+import { TodosStore } from '../stores/TodosStore';
 
 const AddTodo = () => {
   const { REACT_APP_FAKE_SERVER } = process.env;
@@ -35,10 +36,14 @@ const AddTodo = () => {
   const modes = useColorModeValue('purple.400', 'orange.300');
   const color = useColorModeValue('gray.800', 'white');
 
+  // TODO: Delete this sh*t
+  // Move axios post to api
+
   const handleNewTodo = event => {
     event.preventDefault();
     if (!newTodo) return;
 
+    // Delete this mock and provide type / interface
     const data = {
       id: useUniqueId,
       body: newTodo,
@@ -98,7 +103,12 @@ const AddTodo = () => {
             </ModalBody>
 
             <ModalFooter>
-              <Button colorScheme="blue" type="submit" mr={3}>
+              <Button
+                colorScheme="blue"
+                type="submit"
+                mr={3}
+                onClick={() => {}}
+              >
                 Save
               </Button>
               <Button onClick={onClose}>Cancel</Button>
