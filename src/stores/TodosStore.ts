@@ -1,35 +1,43 @@
-import { action, observable } from 'mobx';
+import { makeAutoObservable, observable } from 'mobx';
 import { getTodos, postTodos } from '../api/api';
-import useUniqueId from '../hooks/useUniqueId';
 
 export type TodosAPI = {
-  id: () => string;
-  body: string;
-  completed: boolean;
+  id: number | (() => number);
+  body?: string;
+  completed: boolean | (() => boolean);
 };
 
-export class TodosStore {
-  @observable todos: TodosAPI[] = [];
-  @action
-  loadTodos = () => {
-    getTodos().then(res => (this.todos = res.data));
-  };
+class TodosStore {
+  todos: TodosAPI[] = [];
 
-  // @action
-  // saveTodos = () => {
-  //   postTodos(this.thos);
-  // };
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-  @action
-  addTodos = (body: string) => {
-    const item: TodosAPI = {
-      id: useUniqueId,
-      body,
-      completed: false,
-    };
+  addTodo(todo: any) {
+    this.todos.push(todo);
+  }
 
-    //this.todos.push(item);
-    //postTodos(this.todos);
-    postTodos(item);
-  };
+  removeTodo(id: number) {
+    this.todos = this.todos.filter(todo => todo.id !== id);
+  }
+
+  completeTodo(id: number) {
+    this.todos = this.todos.map(todo =>
+      todo.id === id
+        ? {
+            ...todo,
+            completed: !todo.completed,
+          }
+        : todo
+    );
+  }
+
+  fetchTodos() {
+    getTodos().then(json => {
+      this.todos = [...this.todos, ...json];
+    });
+  }
 }
+
+export default new TodosStore();

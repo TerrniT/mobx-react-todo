@@ -1,37 +1,43 @@
 import { Button, Flex, Input } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
-import { getTodos } from '../api/api';
-import { TodosStore } from '../stores/TodosStore';
+import React from 'react';
+import { postTodos } from '../api/api';
+import TodosStore from '../stores/TodosStore';
 
-interface Props {
-  todoStore: TodosStore;
-}
+export const NewTodoInput = observer(() => {
+  const [title, setTitle] = React.useState('');
 
-export const NewTodoInput: React.FC<Props> = observer(({ todoStore }) => {
-  const [todo, setTodo] = React.useState('');
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    console.log('submit');
 
-  const updateTodo = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTodo(event.target.value);
+    const data = {
+      id: +Math.random().toString(16).slice(-4),
+      body: title,
+      completed: false,
+    };
+
+    try {
+      postTodos(data).then(() => TodosStore.fetchTodos());
+    } catch (error) {
+      console.log(error);
+    }
+
+    setTitle('');
   };
-
-  const onAddTodoClick = (todo: any) => {
-    todoStore.addTodos(todo);
-    setTodo('');
-  };
-
-  useEffect(() => {
-    getTodos().then(res => setTodo(res));
-  }, []);
 
   return (
     <Flex mt="10%">
-      <Input
-        value={todo}
-        onChange={event => setTodo(event.target.value)}
-        placeholder="Add Todo"
-      />
-      <Button onClick={onAddTodoClick(todo)}>Add</Button>
+      <form onSubmit={handleSubmit}>
+        <Input
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          placeholder="Add Todo"
+        />
+        <Button type="submit" onClick={() => console.log('heelo')}>
+          Add
+        </Button>
+      </form>
     </Flex>
   );
 });
