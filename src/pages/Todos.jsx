@@ -28,8 +28,6 @@ const Todos = observer(() => {
   const scheme = useColorModeValue('purple', 'orange');
   const color = useColorModeValue('gray.800', 'white');
 
-
-
   useEffect(() => {
     todosStore.fetchTodos();
   }, []);
@@ -53,12 +51,11 @@ const Todos = observer(() => {
                 {todosStore.todos.map(todo => (
                   <Box maxW="280px" px={2} my={3} h={10} key={todo.id}>
                     <HStack>
-                      {/* <TodoCheckbox todo={todo} /> */}
                       <input
                         required
                         type="checkbox"
                         checked={todo.completed}
-                        onChange={() => !todo.completed}
+                        onChange={() => todosStore.completeTodo(todo)}
                       ></input>
                       <HStack justifyContent="space-between" minW="80%">
                         <Text
@@ -114,7 +111,7 @@ const Todos = observer(() => {
                               as={Box}
                               w="100%"
                               size="sm"
-                              onClick={() => todosStore.removeTodo(todo.id)}
+                              onClick={() => todosStore.removeTodo(todo)}
                             >
                               <DeleteIcon />
                               Delete

@@ -8,6 +8,10 @@ export const getTodos = () => {
   return json;
 };
 
-export const postTodos = (todos: TodosAPI) => {
+export const postTodos = (todos: any) => {
   return axios.post(`${REACT_APP_FAKE_SERVER}/todos`, todos);
+};
+
+export const updateTodo = (todo: any) => {
+  return axios.put(`${REACT_APP_FAKE_SERVER}/todos/${todo.id}`, todo);
 };

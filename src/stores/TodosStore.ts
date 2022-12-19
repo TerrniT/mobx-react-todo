@@ -1,5 +1,6 @@
+import axios from 'axios';
 import { makeAutoObservable, observable } from 'mobx';
-import { getTodos, postTodos } from '../api/api';
+import { getTodos, postTodos, updateTodo } from '../api/api';
 
 export type TodosAPI = {
   id: number | (() => number);
@@ -14,23 +15,38 @@ class TodosStore {
     makeAutoObservable(this);
   }
 
-  addTodo(todo: any) {
-    this.todos.push(todo);
+  addTodo() {
+    // Push => create a new object and spread into array
+    //    this.todos.push(todo);
+    postTodos(this.todos);
   }
 
-  removeTodo(id: number) {
-    this.todos = this.todos.filter(todo => todo.id !== id);
+  removeTodo(todo: any) {
+    try {
+      const response = axios.delete(
+        `${process.env.REACT_APP_FAKE_SERVER}/todos/${todo.id}`,
+        todo
+      );
+
+      this.todos = this.todos.filter(item => item.id !== todo.id);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  completeTodo(id: number) {
-    this.todos = this.todos.map(todo =>
-      todo.id === id
+  completeTodo(todo: any) {
+    this.todos = this.todos.map(item =>
+      item.id === todo.id
         ? {
-            ...todo,
+            ...item,
             completed: !todo.completed,
           }
-        : todo
+        : item
     );
+    updateTodo({
+      ...todo,
+      completed: !todo.completed,
+    });
   }
 
   fetchTodos() {

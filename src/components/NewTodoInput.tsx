@@ -2,6 +2,7 @@ import { Button, Flex, Input } from '@chakra-ui/react';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { postTodos } from '../api/api';
+import useUniqueId from '../hooks/useUniqueId';
 import TodosStore from '../stores/TodosStore';
 
 export const NewTodoInput = observer(() => {
@@ -12,7 +13,7 @@ export const NewTodoInput = observer(() => {
     console.log('submit');
 
     const data = {
-      id: +Math.random().toString(16).slice(-4),
+      id: useUniqueId,
       body: title,
       completed: false,
     };
